@@ -22,6 +22,7 @@ namespace _3_Wpf_TextEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string fileName;
         public MainWindow()
         {
             InitializeComponent();
@@ -67,29 +68,69 @@ namespace _3_Wpf_TextEditor
                 textBox.Foreground = Brushes.Red;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-            if (openFileDialog.ShowDialog()==true)
+            if (openFileDialog.ShowDialog() == true)
             {
-                textBox.Text = File.ReadAllText(openFileDialog.FileName);
+                fileName = openFileDialog.FileName;
+                textBox.Text = File.ReadAllText(fileName);
             }
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (File.Exists(fileName))
+            {
+                File.WriteAllText(fileName, textBox.Text);
+            }
+            else
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    fileName = saveFileDialog.FileName;
+                    File.WriteAllText(fileName, textBox.Text);
+                }
+            }
+        }
+        private void SaveAsExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(saveFileDialog.FileName, textBox.Text);
+                fileName = saveFileDialog.FileName;
+                File.WriteAllText(fileName, textBox.Text);
             }
         }
 
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            if (textBox.Text.Length != 0)
+            {
+                switch (MessageBox.Show("Хотите сохранить изменения?", "Выход", MessageBoxButton.YesNoCancel))
+                {
+                    case MessageBoxResult.Cancel:
+                        break;
+                    case MessageBoxResult.Yes:
+                        SaveExecuted(sender, e);
+                        Application.Current.Shutdown();
+                        break;
+                    case MessageBoxResult.No:
+                        Application.Current.Shutdown();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
         }
+
     }
 }

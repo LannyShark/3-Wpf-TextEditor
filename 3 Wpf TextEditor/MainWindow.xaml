@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:_3_Wpf_TextEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenExecuted"/>
+        <CommandBinding Command="Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="SaveAs" Executed="SaveAsExecuted"/>
+        <CommandBinding Command="Close" Executed="CloseExecuted"/>
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,23 +20,35 @@
         </Grid.RowDefinitions>
         <DockPanel>
             <Menu DockPanel.Dock="Top" VerticalContentAlignment="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open" Click="MenuItem_Click">
+                <MenuItem Header="_Файл">
+                    <MenuItem Command="Open">
                         <MenuItem.Icon>
                             <Image Source="Data/icon-open.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Save" Click="MenuItem_Click_1">
+                    <MenuItem Command="Save">
+                        <MenuItem.Icon>
+                            <Image Source="Data/icon-save.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Command="SaveAs">
                         <MenuItem.Icon>
                             <Image Source="Data/icon-save.png"/>
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Exit" Click="MenuItem_Click_2">
-                    <MenuItem.Icon>
-                        <Image Source="Data/icon-exit.png"/>
-                    </MenuItem.Icon>
+                    <MenuItem Command="Close">
+                        <MenuItem.Icon>
+                            <Image Source="Data/icon-exit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
+                <MenuItem Header="Правка">
+                    <MenuItem Command="Undo"/>
+                    <Separator/>
+                    <MenuItem Command="Cut"/>
+                    <MenuItem Command="Copy"/>
+                    <MenuItem Command="Paste"/>      
                 </MenuItem>
             </Menu>
         </DockPanel>
