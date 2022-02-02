@@ -30,13 +30,13 @@ namespace _3_Wpf_TextEditor
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string fontName = ((sender as ComboBox).SelectedItem as TextBlock).Text;
+            string fontName = (string) (sender as ComboBox).SelectedItem;
             if (textBox != null)
                 textBox.FontFamily = new FontFamily(fontName);
         }
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            int fontHeight = Convert.ToInt32(((sender as ComboBox).SelectedItem as TextBlock).Text);
+            int fontHeight = Convert.ToInt32((sender as ComboBox).SelectedItem);
             if (textBox != null)
                 textBox.FontSize = fontHeight;
         }
