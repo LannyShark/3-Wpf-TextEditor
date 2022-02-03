@@ -26,11 +26,28 @@ namespace _3_Wpf_TextEditor
         public MainWindow()
         {
             InitializeComponent();
+            List<string> theme = new List<string>() { "Светлая тема", "Темная тема" };
+            themeBox.ItemsSource = theme;
+            themeBox.SelectionChanged += themeChange;
+            themeBox.SelectedIndex = 0;
+        }
+
+        private void themeChange(object sender, SelectionChangedEventArgs e)
+        {
+            int themeIndex = themeBox.SelectedIndex;
+            Uri uri = new Uri("Light.xaml", UriKind.Relative);
+            if (themeIndex == 1)
+            {
+                uri = new Uri("Dark.xaml", UriKind.Relative);
+            }
+            ResourceDictionary resource = Application.LoadComponent(uri) as ResourceDictionary;
+            Application.Current.Resources.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(resource);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string fontName = (string) (sender as ComboBox).SelectedItem;
+            string fontName = (string)(sender as ComboBox).SelectedItem;
             if (textBox != null)
                 textBox.FontFamily = new FontFamily(fontName);
         }
