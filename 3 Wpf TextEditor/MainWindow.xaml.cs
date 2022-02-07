@@ -45,19 +45,6 @@ namespace _3_Wpf_TextEditor
             Application.Current.Resources.MergedDictionaries.Add(resource);
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string fontName = (string)(sender as ComboBox).SelectedItem;
-            if (textBox != null)
-                textBox.FontFamily = new FontFamily(fontName);
-        }
-        private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-            int fontHeight = Convert.ToInt32((sender as ComboBox).SelectedItem);
-            if (textBox != null)
-                textBox.FontSize = fontHeight;
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             textBox.FontWeight = (textBox.FontWeight != FontWeights.Bold) ? FontWeights.Bold : FontWeights.Normal;
