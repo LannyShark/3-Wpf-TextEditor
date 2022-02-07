@@ -13,9 +13,4 @@
     </Style>
     <Style TargetType="ToolBarTray" BasedOn="{StaticResource WindowStyle}">
     </Style>
-    <Style TargetType="Button">
-        <Setter Property="Button.Background" Value="White"/>
-        <Setter Property="Button.Margin" Value="5"/>
-        <Setter Property="Button.Padding" Value="5"/>
-    </Style>
 </ResourceDictionary>
